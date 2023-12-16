@@ -14,7 +14,7 @@ class Auth
         if (!isset($_SERVER['PHP_AUTH_USER'])) {
             header('WWW-Authenticate: Basic realm="My Realm"');
             header('HTTP/1.0 401 Unauthorized');
-            echo 'Text to send if user hits Cancel button';
+            echo 'Hoopszi, username és jelszó szükséges';
             exit;
         } else {
             $username = $_SERVER['PHP_AUTH_USER'];
@@ -26,6 +26,7 @@ class Auth
                 return true;
             } else {
                 header('HTTP/1.0 401 Unauthorized');
+                echo 'Nem megfelelő, username és jelszó';
                 exit;
             }
         }
