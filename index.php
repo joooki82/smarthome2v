@@ -39,15 +39,13 @@ $uriSegments = explode('/', trim($uri, '/'));
 
 if (count($uriSegments) >= 2 && $uriSegments[1] === 'login' && $method === 'POST') {
     $authResult = Auth::authenticate();
-}
-
-$authResult = false;
-//$authResult = Auth::authenticate();
-if (count($uriSegments) >= 2 && $uriSegments[1] === 'users' && $method === 'POST') {
+} elseif (count($uriSegments) >= 2 && $uriSegments[1] === 'users' && $method === 'POST') {
     $userController->createUser();
 } elseif (count($uriSegments) >= 2 && $uriSegments[1] === 'devices') {
 
-    if (isset($uriSegments[2]) && is_numeric($uriSegments[2]) && $authResult) {
+    $authResult = Auth::authenticate();
+
+    if (isset($uriSegments[2]) && is_numeric($uriSegments[2])) {
 
         $id = (int) $uriSegments[2];
         switch ($method) {
@@ -65,9 +63,9 @@ if (count($uriSegments) >= 2 && $uriSegments[1] === 'users' && $method === 'POST
                 echo json_encode(['message' => 'Method not allowed']);
                 break;
         }
-    } elseif (count($uriSegments) >= 2 && $uriSegments[1] === 'devices' && $method === 'POST' && $authResult) {
+    } elseif (count($uriSegments) >= 2 && $uriSegments[1] === 'devices' && $method === 'POST') {
         $deviceController->createDevice();
-    } elseif (count($uriSegments) >= 2 && $uriSegments[1] === 'devices' && $method === 'GET' && $authResult) {
+    } elseif (count($uriSegments) >= 2 && $uriSegments[1] === 'devices' && $method === 'GET') {
         $deviceController->getAllDevices();
     }
 } else {
