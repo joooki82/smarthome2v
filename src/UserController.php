@@ -18,10 +18,10 @@ class UserController
             if ($result) {
                 return $result->fetch(PDO::FETCH_ASSOC);
             } else {
-                return null; // Or throw an exception
+                return null;
             }
         } catch (Exception $e) {
-            // Handle or propagate the exception
+            return null;
         }
     }
 
