@@ -47,4 +47,5 @@ class UserController
             echo json_encode(['message' => $e->getMessage()]);
         }
     }
+
 }

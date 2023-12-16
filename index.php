@@ -36,13 +36,15 @@ $deviceController = new DeviceController($db);
 
 $uriSegments = explode('/', trim($uri, '/'));
 
+
+if (count($uriSegments) >= 2 && $uriSegments[1] === 'login' && $method === 'POST') {
+    $authResult = Auth::authenticate();
+}
 if (count($uriSegments) >= 2 && $uriSegments[1] === 'users' && $method === 'POST') {
     $userController->createUser();
 } elseif (count($uriSegments) >= 2 && $uriSegments[1] === 'devices') {
-    Auth::authenticate(); // Authenticate before accessing device endpoints
-
-    if (isset($uriSegments[2]) && is_numeric($uriSegments[2])) {
-
+    $authResult = Auth::authenticate();
+    if (isset($uriSegments[2]) && is_numeric($uriSegments[2]) && $authResult) {
 
         $id = (int) $uriSegments[2];
         switch ($method) {
