@@ -23,15 +23,17 @@ $deviceController = new DeviceController($db);
 $uriSegments = explode('/', trim($uri, '/'));
 
 // User creation endpoint
-if (count($uriSegments) >= 2 && $uriSegments[1] === 'users' && $method === 'POST') {
-    $userController->createUser();
-} elseif (count($uriSegments) > 2 && $uriSegments[1] === 'devices') {
+//if (count($uriSegments) >= 2 && $uriSegments[1] === 'users' && $method === 'POST') {
+//    $userController->createUser();
+//} else
+if (count($uriSegments) > 2 && $uriSegments[1] === 'devices') {
+    echo "Successfully connected to the database.";
     // Authentication check for device operations
-    if (!Auth::authenticate()) {
-        http_response_code(401);
-        echo json_encode(['message' => 'Unauthorized']);
-        exit;
-    }
+    //   if (!Auth::authenticate()) {
+    //       http_response_code(401);
+    //      echo json_encode(['message' => 'Unauthorized']);
+    //      exit;
+    //  }
 
     $id = isset($uriSegments[2]) && is_numeric($uriSegments[2]) ? (int) $uriSegments[2] : null;
 
