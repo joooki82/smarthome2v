@@ -44,7 +44,7 @@ if (count($uriSegments) >= 2 && $uriSegments[1] === 'users' && $method === 'POST
     $userController->createUser();
 } elseif (count($uriSegments) >= 2 && $uriSegments[1] === 'devices') {
     $authResult = Auth::authenticate();
-    if (isset($uriSegments[2]) && is_numeric($uriSegments[2]) && $authResult) {
+    if (isset($uriSegments[2]) && is_numeric($uriSegments[2]) && $authResult === true) {
 
         $id = (int) $uriSegments[2];
         switch ($method) {
