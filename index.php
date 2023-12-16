@@ -1,6 +1,8 @@
 <?php
 
 declare(strict_types=1);
+require_once 'Auth.php'; // Include Auth.php
+
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
@@ -22,6 +24,8 @@ spl_autoload_register(function ($class) {
 $database = new Database();
 $db = $database->connect();
 
+Auth::initialize($db); // Initialize Auth with DB
+
 // if ($db) {
 //     echo "Successfully connected to the database.";
 // } else {
@@ -34,32 +38,33 @@ $uriSegments = explode('/', trim($uri, '/'));
 
 if (count($uriSegments) >= 2 && $uriSegments[1] === 'users' && $method === 'POST') {
     $userController->createUser();
-} elseif (count($uriSegments) > 2 && $uriSegments[1] === 'devices' && isset($uriSegments[2]) && is_numeric($uriSegments[2])) {
-    if (!Auth::authenticate()) {
-        http_response_code(401);
-        echo json_encode(['message' => 'Unauthorized']);
-        exit;
+} elseif (count($uriSegments) >= 2 && $uriSegments[1] === 'devices') {
+    Auth::authenticate(); // Authenticate before accessing device endpoints
+
+    if (isset($uriSegments[2]) && is_numeric($uriSegments[2])) {
+
+
+        $id = (int) $uriSegments[2];
+        switch ($method) {
+            case 'GET':
+                $deviceController->getSingleDevice($id);
+                break;
+            case 'PUT':
+                $deviceController->updateDevice($id);
+                break;
+            case 'DELETE':
+                $deviceController->deleteDevice($id);
+                break;
+            default:
+                http_response_code(405);
+                echo json_encode(['message' => 'Method not allowed']);
+                break;
+        }
+    } elseif (count($uriSegments) >= 2 && $uriSegments[1] === 'devices' && $method === 'POST') {
+        $deviceController->createDevice();
+    } elseif (count($uriSegments) >= 2 && $uriSegments[1] === 'devices' && $method === 'GET') {
+        $deviceController->getAllDevices();
     }
-    $id = (int) $uriSegments[2];
-    switch ($method) {
-        case 'GET':
-            $deviceController->getSingleDevice($id);
-            break;
-        case 'PUT':
-            $deviceController->updateDevice($id);
-            break;
-        case 'DELETE':
-            $deviceController->deleteDevice($id);
-            break;
-        default:
-            http_response_code(405);
-            echo json_encode(['message' => 'Method not allowed']);
-            break;
-    }
-} elseif (count($uriSegments) >= 2 && $uriSegments[1] === 'devices' && $method === 'POST') {
-    $deviceController->createDevice();
-} elseif (count($uriSegments) >= 2 && $uriSegments[1] === 'devices' && $method === 'GET') {
-    $deviceController->getAllDevices();
 } else {
     http_response_code(404);
     echo json_encode(['message' => 'Resource not found']);
