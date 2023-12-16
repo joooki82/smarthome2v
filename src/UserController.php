@@ -12,13 +12,16 @@ class UserController
 
     public function getUserByUsername($username)
     {
-        $result = $this->user->readByUsername($username); // You'll need to implement readByUsername in User class
+        try {
+            $result = $this->user->readByUsername($username);
 
-        if ($result) {
-            echo json_encode($result->fetch(PDO::FETCH_ASSOC));
-        } else {
-            http_response_code(404);
-            echo json_encode(['message' => 'User not found']);
+            if ($result) {
+                return $result->fetch(PDO::FETCH_ASSOC);
+            } else {
+                return null; // Or throw an exception
+            }
+        } catch (Exception $e) {
+            // Handle or propagate the exception
         }
     }
 
