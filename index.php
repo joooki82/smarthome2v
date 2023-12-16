@@ -40,7 +40,9 @@ $uriSegments = explode('/', trim($uri, '/'));
 if (count($uriSegments) >= 2 && $uriSegments[1] === 'login' && $method === 'POST') {
     $authResult = Auth::authenticate();
 }
-$authResult = Auth::authenticate();
+
+$authResult = false;
+//$authResult = Auth::authenticate();
 if (count($uriSegments) >= 2 && $uriSegments[1] === 'users' && $method === 'POST') {
     $userController->createUser();
 } elseif (count($uriSegments) >= 2 && $uriSegments[1] === 'devices') {

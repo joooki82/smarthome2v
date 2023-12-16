@@ -9,33 +9,13 @@ class Auth
         self::$userController = new UserController($db);
     }
 
-    // public static function authenticate()
-    // {
-    //     if (!isset($_SERVER['PHP_AUTH_USER'])) {
-    //         header('WWW-Authenticate: Basic realm="My Realm"');
-    //         header('HTTP/1.0 401 Unauthorized');
-    //         echo 'Hoopszi, username és jelszó szükséges';
-    //         exit;
-    //     } else {
-    //         $username = $_SERVER['PHP_AUTH_USER'];
-    //         $password = $_SERVER['PHP_AUTH_PW'];
-
-    //         $user = self::$userController->getUserByUsername($username);
-
-    //         if ($user && password_verify($password, $user['password'])) {
-    //             return true;
-    //         } else {
-    //             header('HTTP/1.0 401 Unauthorized');
-    //             echo 'Nem megfelelő, username és jelszó';
-    //             exit;
-    //         }
-    //     }
-    // }
-
     public static function authenticate()
     {
         if (!isset($_SERVER['PHP_AUTH_USER'])) {
-            return ['authenticated' => false, 'message' => 'Hoopszi, username és jelszó szükséges'];
+            header('WWW-Authenticate: Basic realm="My Realm"');
+            header('HTTP/1.0 401 Unauthorized');
+            echo 'Hoopszi, username és jelszó szükséges';
+            exit;
         } else {
             $username = $_SERVER['PHP_AUTH_USER'];
             $password = $_SERVER['PHP_AUTH_PW'];
@@ -43,12 +23,32 @@ class Auth
             $user = self::$userController->getUserByUsername($username);
 
             if ($user && password_verify($password, $user['password'])) {
-                return ['authenticated' => true, 'user' => $user]; // Assuming you want to return user details
+                return true;
             } else {
-                return ['authenticated' => false, 'message' => 'Nem megfelelő, username és jelszó'];
+                header('HTTP/1.0 401 Unauthorized');
+                echo 'Nem megfelelő, username és jelszó';
+                exit;
             }
         }
     }
+
+    // public static function authenticate()
+    // {
+    //     if (!isset($_SERVER['PHP_AUTH_USER'])) {
+    //         return ['authenticated' => false, 'message' => 'Hoopszi, username és jelszó szükséges'];
+    //     } else {
+    //         $username = $_SERVER['PHP_AUTH_USER'];
+    //         $password = $_SERVER['PHP_AUTH_PW'];
+
+    //         $user = self::$userController->getUserByUsername($username);
+
+    //         if ($user && password_verify($password, $user['password'])) {
+    //             return ['authenticated' => true, 'user' => $user]; // Assuming you want to return user details
+    //         } else {
+    //             return ['authenticated' => false, 'message' => 'Nem megfelelő, username és jelszó'];
+    //         }
+    //     }
+    // }
 
     public function loginUser()
     {
