@@ -7,7 +7,7 @@ class UserController
     public function __construct($db)
     {
         $this->db = $db;
-        $this->user = new User($db); // Assuming you have a User class similar to Device
+        $this->user = new User($db);
     }
 
     public function getUserByUsername($username)

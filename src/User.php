@@ -38,7 +38,7 @@ class User
             $stmt = $this->conn->prepare($query);
 
             $username = htmlspecialchars(strip_tags($data['username']));
-            $password = password_hash($data['password'], PASSWORD_DEFAULT); // Hashing the password
+            $password = password_hash($data['password'], PASSWORD_DEFAULT);
 
             $stmt->bindParam(':username', $username);
             $stmt->bindParam(':password', $password);

@@ -1,8 +1,7 @@
 <?php
 
 declare(strict_types=1);
-require_once 'src/Auth.php'; // Include Auth.php
-
+require_once 'src/Auth.php';
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
@@ -12,11 +11,6 @@ header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,
 $uri = $_SERVER['REQUEST_URI'];
 $method = $_SERVER['REQUEST_METHOD'];
 
-// echo $uri;
-// echo "\n";
-// echo $method;
-// echo "\n";
-
 spl_autoload_register(function ($class) {
     require __DIR__ . "/src/$class.php";
 });
@@ -24,13 +18,8 @@ spl_autoload_register(function ($class) {
 $database = new Database();
 $db = $database->connect();
 
-Auth::initialize($db); // Initialize Auth with DB
+Auth::initialize($db);
 
-// if ($db) {
-//     echo "Successfully connected to the database.";
-// } else {
-//     echo "Failed to connect to the database.";
-// }
 $userController = new UserController($db);
 $deviceController = new DeviceController($db);
 
