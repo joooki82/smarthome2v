@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2023. Dec 16. 20:59
+-- Létrehozás ideje: 2023. Dec 18. 07:17
 -- Kiszolgáló verziója: 10.4.28-MariaDB
 -- PHP verzió: 8.2.4
 
@@ -41,8 +41,7 @@ CREATE TABLE `camera_settings` (
 INSERT INTO `camera_settings` (`camera_id`, `device_id`, `resolution`, `motion_detection`) VALUES
 (1, 2, '1080p', 1),
 (2, 4, '720p', 0),
-(3, 8, '1080p', 1),
-(4, 11, '720p', 1);
+(3, 8, '1080p', 1);
 
 -- --------------------------------------------------------
 
@@ -73,9 +72,10 @@ INSERT INTO `devices` (`device_id`, `device_type`, `device_name`, `status`, `cre
 (7, 'thermostat', 'Office Thermostat', 'on', '2023-12-16 18:32:03', '2023-12-16 18:32:03'),
 (8, 'camera', 'Garage Camera', 'off', '2023-12-16 18:32:03', '2023-12-16 18:32:03'),
 (9, 'light', 'Garage Light', 'off', '2023-12-16 18:32:03', '2023-12-16 18:32:03'),
-(10, 'light', 'Patio Light', 'on', '2023-12-16 18:32:03', '2023-12-16 18:32:03'),
-(11, 'camera', 'Baby Room Camera', 'on', '2023-12-16 18:32:03', '2023-12-16 18:32:03'),
-(12, 'thermostat', 'Guest Room Thermostat', 'off', '2023-12-16 18:32:03', '2023-12-16 18:32:03');
+(10, 'light', 'Patio Light', 'off', '2023-12-16 18:32:03', '2023-12-18 06:12:40'),
+(12, 'thermostat', 'Guest Room Thermostat', 'off', '2023-12-16 18:32:03', '2023-12-16 18:32:03'),
+(13, '', 'Attic pattic', 'off', '2023-12-16 22:57:02', '2023-12-16 22:57:02'),
+(14, 'camera', 'Canaon', 'off', '2023-12-17 23:13:56', '2023-12-17 23:13:56');
 
 -- --------------------------------------------------------
 
@@ -194,7 +194,7 @@ ALTER TABLE `camera_settings`
 -- AUTO_INCREMENT a táblához `devices`
 --
 ALTER TABLE `devices`
-  MODIFY `device_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `device_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT a táblához `light_settings`
@@ -212,7 +212,7 @@ ALTER TABLE `thermostat_settings`
 -- AUTO_INCREMENT a táblához `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Megkötések a kiírt táblákhoz
